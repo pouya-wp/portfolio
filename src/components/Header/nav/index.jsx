@@ -10,10 +10,6 @@ import Footer from './Footer';
 const navItems = [
 
   {
-    title: "Work",
-    href: "#Work", // تبدیل به ID سکشن
-  },
-  {
     title: "About",
     href: "#info", // همچنان لینک صفحه
   },

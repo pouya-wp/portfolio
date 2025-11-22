@@ -4,10 +4,15 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion';
 import Preloader from '../components/Preloader';
 import Landing from '../components/Landing';
-import Projects from '../components/Projects';
 import Description from '../components/Description';
-import SlidingImages from '../components/SlidingImages';
+import Caro from '../components/SlidingImages';
 import Contact from '../components/Contact';
+import Feature from '../components/Feature/Feature.jsx'
+import Music from '../components/Music/Music'
+import Cursor from '../components/Cursor/Cursor'
+import Noise from '../components/Noise/Noise'
+import MobileBlocker from "@/components/Mobile/Mobile";
+import ScrollRGB from "@/components/Dis/Dis";
 
 export default function Home() {
 
@@ -29,15 +34,24 @@ export default function Home() {
   }, [])
 
   return (
-    <main className={styles.main}>
-      <AnimatePresence mode='wait'>
-        {isLoading && <Preloader />}
-      </AnimatePresence>
-      <Landing />
-      <Description />
-      <Projects />
-      <SlidingImages />
-      <Contact />
-    </main>
+    // MobileBlocker باید پدر همه چیز باشه
+    <MobileBlocker>
+      <div>
+        <ScrollRGB />
+        <Noise />
+        <Cursor />
+        <main className={styles.main}>
+          <AnimatePresence mode='wait'>
+            {isLoading && <Preloader />}
+          </AnimatePresence>
+          <Landing />
+          <Music />
+          <Description />
+          <Feature />
+          <Caro />
+          <Contact />
+        </main>
+      </div>
+    </MobileBlocker>
   )
 }

@@ -4,16 +4,10 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { opacity, slideUp } from './anim';
 
-const words = [
+const words = ["Hello", "سلام", "مرحبا", "Guten Tag", "Bonjour", "Hola", "Привет", "Ciao"];
 
-    "Hello",
-
-    "سلام",
-
-    "مرحبا","Guten Tag","Bonjour","Hola","Привет","Ciao"
-  ];
-
-export default function Index() {
+// 1. دریافت پراپ finishLoading
+export default function Preloader({ finishLoading }) {
     const [index, setIndex] = useState(0);
     const [dimension, setDimension] = useState({width: 0, height:0});
 
@@ -22,7 +16,13 @@ export default function Index() {
     }, [])
 
     useEffect( () => {
-        if(index == words.length - 1) return;
+        if(index == words.length - 1) {
+            // 2. وقتی کلمات تمام شد، با کمی تاخیر تابع پایان را صدا بزن
+            setTimeout(() => {
+                if(finishLoading) finishLoading();
+            }, 800); // 800 میلی ثانیه مکث روی آخرین کلمه
+            return;
+        }
         setTimeout( () => {
             setIndex(index + 1)
         }, index == 0 ? 1000 : 150)
@@ -43,7 +43,8 @@ export default function Index() {
     }
 
     return (
-        <motion.div variants={slideUp} initial="initial" exit="exit" className={styles.introduction}>
+        // توجه: z-index این باید خیلی بالا باشد تا روی همه چیز باشد
+        <motion.div variants={slideUp} initial="initial" exit="exit" className={styles.introduction} style={{zIndex: 99999}}>
             {dimension.width > 0 &&
             <>
                 <motion.p variants={opacity} initial="initial" animate="enter"><span></span>{words[index]}</motion.p>
