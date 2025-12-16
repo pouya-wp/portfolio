@@ -52,3 +52,146 @@
   }
 
 
+  // style.module.scss
+
+  .hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6vw;
+    gap: 4rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      gap: 3rem;
+    }
+  }
+
+  // Left
+  .left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .title {
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-top: 300px;
+
+    span {
+      display: block;
+    }
+    .outlineSvg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+
+      text {
+        font-family: inherit;
+        font-size: 70px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+    }
+  }
+
+  // Right
+  .right {
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      align-items: center;
+    }
+  }
+
+  .bio {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    opacity: 0.7;
+  }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: gap 0.3s ease;
+
+    &:hover {
+      gap: 1rem;
+    }
+
+    svg {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover svg {
+      transform: translate(3px, -3px);
+    }
+  }
+
+  // Marquee
+  .marqueeWrapper {
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .marquee {
+    display: flex;
+    white-space: nowrap;
+
+    p {
+      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.4;
+      padding-right: 1rem;
+    }
+  }

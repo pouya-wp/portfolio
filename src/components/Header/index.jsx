@@ -47,8 +47,8 @@ export default function Header() {
                 <p className={styles.copyright}>©</p>
                 <div className={styles.name}>
                     <p className={styles.codeBy}>Code by</p>
-                    <p className={styles.dennis}>Pouya</p>
-                    <p className={styles.snellenberg}>Sadeqpour</p>
+                    <p className={styles.pouya}>Pouya</p>
+                    <p className={styles.sadeqpour}>Sadeqpour</p>
                 </div>
             </div>
             <div className={styles.nav}>

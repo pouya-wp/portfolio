@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useLayoutEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FaReact, FaNodeJs, FaFigma, FaCode } from 'react-icons/fa';
+import { FaReact, FaWordpress, FaFigma, FaPaintBrush, FaVideo, FaCube } from 'react-icons/fa';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- Magnetic Button Component ---
 const Magnetic = ({ children }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -45,42 +44,58 @@ const Magnetic = ({ children }) => {
 const experiences = [
   {
     id: 1,
-    role: "Senior Frontend Dev",
-    company: "Tech Giant Co.",
+    role: "Frontend Developer",
+    company: "Freelance",
     period: "2023 - Present",
-    desc: "Leading the frontend team, implementing micro-frontend architecture, and improving site performance by 40%.",
+    desc: "Building modern web applications with React & Next.js. Creating smooth animations and interactive user experiences.",
     icon: <FaReact />
   },
   {
     id: 2,
-    role: "UI/UX Designer",
-    company: "Creative Agency",
-    period: "2021 - 2023",
-    desc: "Designed comprehensive design systems and high-fidelity interactive prototypes for fintech clients.",
-    icon: <FaFigma />
+    role: "WordPress Developer",
+    company: "Freelance",
+    period: "2022 - 2023",
+    desc: "Developed custom themes and plugins. Built e-commerce solutions with WooCommerce for various clients.",
+    icon: <FaWordpress />
   },
   {
     id: 3,
-    role: "Full Stack Developer",
-    company: "Startup X",
-    period: "2019 - 2021",
-    desc: "Built the entire platform from scratch using the MERN stack and optimized database queries.",
-    icon: <FaNodeJs />
+    role: "CGI Artist",
+    company: "Freelance",
+    period: "2021 - 2022",
+    desc: "Created 3D product visualizations and architectural renders using Blender and Cinema 4D.",
+    icon: <FaCube />
   },
   {
     id: 4,
-    role: "Junior Developer",
+    role: "Video Editor",
+    company: "Freelance",
+    period: "2020 - 2021",
+    desc: "Edited promotional videos, motion graphics, and social media content using Premiere Pro and After Effects.",
+    icon: <FaVideo />
+  },
+  {
+    id: 5,
+    role: "Graphic Designer",
+    company: "Freelance",
+    period: "2019 - 2020",
+    desc: "Designed brand identities, social media graphics, and marketing materials for startups and small businesses.",
+    icon: <FaPaintBrush />
+  },
+  {
+    id: 6,
+    role: "UI/UX Designer",
     company: "Freelance",
     period: "2018 - 2019",
-    desc: "Started the journey with small web projects, landing pages, and mastering HTML/CSS/JS.",
-    icon: <FaCode />
+    desc: "Started the creative journey designing user interfaces and prototypes in Figma and Adobe XD.",
+    icon: <FaFigma />
   }
 ];
 
 const Feature = () => {
   const containerRef = useRef(null);
   const lineRef = useRef(null);
-  const bgLineRef = useRef(null); // اضافه کردن Ref برای خط پس زمینه
+  const bgLineRef = useRef(null);
 
   useEffect(() => {
     let scroll;
@@ -106,42 +121,35 @@ const Feature = () => {
       const timelineInner = containerRef.current.querySelector('.timeline-inner');
       const lastDot = containerRef.current.querySelector('.timeline-item:last-child .timeline-dot');
 
-      // محاسبه ارتفاع دقیق: فاصله بالای کانتینر تا بالای آخرین دایره + نصف ارتفاع دایره
       const calculateHeight = () => {
-         if (!lastDot || !timelineInner) return '100%';
-
-         const innerRect = timelineInner.getBoundingClientRect();
-         const dotRect = lastDot.getBoundingClientRect();
-
-         // فاصله دایره از بالای کانتینر خودمان
-         const height = (dotRect.top - innerRect.top) + (dotRect.height / 2);
-         return height;
+        if (!lastDot || !timelineInner) return '100%';
+        const innerRect = timelineInner.getBoundingClientRect();
+        const dotRect = lastDot.getBoundingClientRect();
+        const height = (dotRect.top - innerRect.top) + (dotRect.height / 2);
+        return height;
       };
 
       const finalHeight = calculateHeight();
 
-      // تنظیم ارتفاع خط پس‌زمینه (خاکستری) تا دقیقا پشت دایره آخر تمام شود
       if (bgLineRef.current) {
         gsap.set(bgLineRef.current, { height: finalHeight });
       }
 
-      // Line animation (نارنجی)
       gsap.fromTo(lineRef.current,
         { height: 0 },
         {
-          height: finalHeight, // انیمیشن تا ارتفاع محاسبه شده
+          height: finalHeight,
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top center', // شروع وقتی بالای سکشن به وسط صفحه رسید
-            end: `bottom center`, // پایان وقتی پایین سکشن به وسط رسید
+            start: 'top center',
+            end: 'bottom center',
             scrub: 1,
-            invalidateOnRefresh: true, // محاسبه مجدد در صورت تغییر سایز صفحه
+            invalidateOnRefresh: true,
           }
         }
       );
 
-      // Item animations
       items.forEach((item) => {
         gsap.fromTo(item.querySelectorAll('.animate-text'),
           { y: 50, opacity: 0 },
@@ -180,16 +188,13 @@ const Feature = () => {
   return (
     <div data-scroll-container className="main-container">
 
-      {/* Hero Section */}
       <section className="hero-section" data-scroll-section>
-        <h1 data-scroll data-scroll-speed="0.2">MY CAREER PATH</h1>
-        <p data-scroll data-scroll-speed="0.1">Scroll down to explore the journey</p>
+        <h1 data-scroll data-scroll-speed="0.2">MY JOURNEY</h1>
+        <p data-scroll data-scroll-speed="0.1">From design to development</p>
       </section>
 
-      {/* Timeline Section */}
       <section className="timeline-section" ref={containerRef} data-scroll-section>
         <div className="timeline-inner">
-          {/* اضافه کردن ref به خط پس زمینه برای کنترل ارتفاع */}
           <div ref={bgLineRef} className="line-bg"></div>
           <div ref={lineRef} className="line-progress"></div>
 
@@ -197,42 +202,39 @@ const Feature = () => {
             {experiences.map((exp, index) => (
               <div key={exp.id} className={`timeline-item ${index % 2 === 0 ? 'layout-left' : 'layout-right'}`}>
 
-                {/* Left Side */}
                 <div className="col-side">
                   {index % 2 === 0 ? (
                     <div className="date-wrapper" data-scroll data-scroll-speed="0.1">
-                       <span className="date-text">{exp.period}</span>
+                      <span className="date-text">{exp.period}</span>
                     </div>
                   ) : (
-                     <div className="content-wrap">
-                        <h2 className="role-title animate-text">{exp.role}</h2>
-                        <h3 className="company-name animate-text">{exp.company}</h3>
-                        <p className="description animate-text">{exp.desc}</p>
-                     </div>
+                    <div className="content-wrap">
+                      <h2 className="role-title animate-text">{exp.role}</h2>
+                      <h3 className="company-name animate-text">{exp.company}</h3>
+                      <p className="description animate-text">{exp.desc}</p>
+                    </div>
                   )}
                 </div>
 
-                {/* Center Icon */}
                 <div className="col-center">
                   <Magnetic>
                     <div className="timeline-dot">
-                       <div className="icon-inner">{exp.icon}</div>
+                      <div className="icon-inner">{exp.icon}</div>
                     </div>
                   </Magnetic>
                 </div>
 
-                {/* Right Side */}
                 <div className="col-side">
                   {index % 2 !== 0 ? (
                     <div className="date-wrapper" data-scroll data-scroll-speed="0.1">
-                       <span className="date-text">{exp.period}</span>
+                      <span className="date-text">{exp.period}</span>
                     </div>
                   ) : (
-                     <div className="content-wrap">
-                        <h2 className="role-title animate-text">{exp.role}</h2>
-                        <h3 className="company-name animate-text">{exp.company}</h3>
-                        <p className="description animate-text">{exp.desc}</p>
-                     </div>
+                    <div className="content-wrap">
+                      <h2 className="role-title animate-text">{exp.role}</h2>
+                      <h3 className="company-name animate-text">{exp.company}</h3>
+                      <p className="description animate-text">{exp.desc}</p>
+                    </div>
                   )}
                 </div>
 
@@ -243,7 +245,7 @@ const Feature = () => {
       </section>
 
       <section className="footer-spacer" data-scroll-section>
-        <h2 data-scroll data-scroll-speed="0.2">TO BE CONTINUED...</h2>
+        <h2 data-scroll data-scroll-speed="0.2">THE JOURNEY CONTINUES...</h2>
       </section>
     </div>
   );

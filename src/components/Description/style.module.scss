@@ -1,60 +1,151 @@
-.description{
-    padding-left: 200px;
-    padding-right: 200px;
-    margin-top: 200px;
+// style.module.scss
+.description {
+    min-height: 100vh;
+    padding: clamp(60px, 10vw, 200px);
+    padding-top: clamp(100px, 15vw, 250px);
+    padding-bottom: clamp(100px, 15vw, 250px);
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    .body{
-        max-width: 1400px;
-        display: flex;
-        gap: 50px;
-        position: relative;
-        p{
-            margin: 0px;
-            &:nth-of-type(1){
-                font-size: 36px;
-                gap: 8px;
-                line-height: 1.3;
-                span{
-                    margin-right: 3px;
-                }
-                .mask{
-                    position: relative;
-                    overflow: hidden;
-                    display: inline-flex;
-                }
-            }
-            &:nth-of-type(2){
-                font-size: 18px;
-                width: 80%;
-                font-weight: 300;
-            }
-        }
-        .button{
-            top: 80%;
-            left: calc(100% - 200px); 
-            width: 180px;
-            height: 180px;
-            background-color: #1C1D20;
-            color: white;
-            border-radius: 50%;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            p{
-                margin: 0px;
-                font-size: 16px;
-                font-weight: 300;
-                position: relative;
-                z-index: 1;
-            }
-        }
+    position: relative;
+    background: #fafafa;
+    overflow: hidden;
+
+    // Subtle grain texture
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.03;
+        pointer-events: none;
     }
-    .moreWork{
-        padding: 20px;
-        border-radius: 40px;
-        border: 1px solid grey;
+}
+
+.body {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.paragraph {
+    font-size: clamp(32px, 5vw, 72px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #1a1a1a;
+    margin: 0 0 clamp(60px, 8vw, 120px);
+    max-width: 1200px;
+}
+
+.wordWrapper {
+    display: inline-flex;
+    overflow: hidden;
+    margin-right: 0.25em;
+    vertical-align: top;
+}
+
+.word {
+    display: inline-block;
+    will-change: opacity, transform;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.subtitle {
+    font-size: clamp(16px, 1.5vw, 20px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #666;
+    max-width: 500px;
+    margin: 0;
+}
+
+.buttonWrapper {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.button {
+    width: clamp(140px, 12vw, 180px);
+    height: clamp(140px, 12vw, 180px);
+    border-radius: 50%;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    &:hover::before {
+        opacity: 1;
+    }
+
+    &:hover .buttonIcon {
+        transform: translate(3px, -3px);
+    }
+}
+
+.buttonText {
+    font-size: clamp(14px, 1.2vw, 16px);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+}
+
+.buttonIcon {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+    svg {
+        display: block;
+    }
+}
+
+.line {
+    position: absolute;
+    bottom: 0;
+    left: clamp(40px, 8vw, 200px);
+    right: clamp(40px, 8vw, 200px);
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    transform-origin: left;
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .buttonWrapper {
+        align-self: flex-end;
+        margin-top: 20px;
     }
 }

@@ -5,13 +5,12 @@ import { AnimatePresence } from 'framer-motion';
 import Preloader from '../components/Preloader';
 import Landing from '../components/Landing';
 import Description from '../components/Description';
-import Caro from '../components/SlidingImages';
+import Portfolio from '../components/SlidingImages';
 import Contact from '../components/Contact';
 import Feature from '../components/Feature/Feature.jsx'
 import Music from '../components/Music/Music'
 import Cursor from '../components/Cursor/Cursor'
 import Noise from '../components/Noise/Noise'
-import MobileBlocker from "@/components/Mobile/Mobile";
 import ScrollRGB from "@/components/Dis/Dis";
 
 export default function Home() {
@@ -34,8 +33,6 @@ export default function Home() {
   }, [])
 
   return (
-    // MobileBlocker باید پدر همه چیز باشه
-    <MobileBlocker>
       <div>
         <ScrollRGB />
         <Noise />
@@ -47,11 +44,10 @@ export default function Home() {
           <Landing />
           <Music />
           <Description />
+          <Portfolio />
           <Feature />
-          <Caro />
           <Contact />
         </main>
       </div>
-    </MobileBlocker>
   )
 }

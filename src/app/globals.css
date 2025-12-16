@@ -8,7 +8,48 @@ body{
 
 
 
+/* globals.css */
+:root {
+  --scroll-speed: 0;
+  --scroll-direction: 1;
+}
 
+/* افکت subtle chromatic روی متن‌های خاص */
+.scroll-chromatic {
+  text-shadow:
+    calc(var(--scroll-speed) * var(--scroll-direction) * 2px) 0 0 rgba(255, 80, 80, calc(var(--scroll-speed) * 0.3)),
+    calc(var(--scroll-speed) * var(--scroll-direction) * -2px) 0 0 rgba(80, 80, 255, calc(var(--scroll-speed) * 0.3));
+  transition: text-shadow 0.1s ease-out;
+}
+
+/* افکت skew برای عکس‌ها - خیلی قشنگ‌تره */
+.scroll-skew {
+  transform: skewY(calc(var(--scroll-speed) * var(--scroll-direction) * 2deg));
+  transition: transform 0.15s ease-out;
+}
+
+/* افکت blur subtle */
+.scroll-blur {
+  filter: blur(calc(var(--scroll-speed) * 1px));
+  transition: filter 0.1s ease-out;
+}
+
+/* افکت scale */
+.scroll-scale {
+  transform: scaleY(calc(1 + var(--scroll-speed) * 0.02));
+  transition: transform 0.15s ease-out;
+}
+
+/* ترکیبی - برای هدینگ‌های بزرگ */
+.scroll-hero {
+  transform:
+    skewY(calc(var(--scroll-speed) * var(--scroll-direction) * 1deg))
+    translateY(calc(var(--scroll-speed) * var(--scroll-direction) * -3px));
+  text-shadow:
+    calc(var(--scroll-speed) * var(--scroll-direction) * 1.5px) 0 0 rgba(255, 100, 100, calc(var(--scroll-speed) * 0.2)),
+    calc(var(--scroll-speed) * var(--scroll-direction) * -1.5px) 0 0 rgba(100, 100, 255, calc(var(--scroll-speed) * 0.2));
+  transition: all 0.12s ease-out;
+}
 
 .main-container {
   width: 100%;
@@ -211,14 +252,14 @@ section, .main-container {
 }
 
 .footer-spacer {
-  height: 30vh;
+  height: 40vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  color: transparent;
 }
 .footer-spacer h2 {
-    color: #333;
+    color: transparent;
     font-size: 3rem;
     text-transform: uppercase;
 }

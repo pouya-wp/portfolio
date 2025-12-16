@@ -1,62 +1,58 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-const ScrollRGB = () => {
+const ScrollDistortion = () => {
+  const speedRef = useRef(0);
+  const targetSpeedRef = useRef(0);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    let speed = 0;
     let rafId;
+    let ticking = false;
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      // محاسبه سرعت (تفاوت اسکرول الان با قبلی)
-      const delta = currentScrollY - lastScrollY;
-
-      // سرعت رو نرم‌تر میکنیم
-      speed = delta * 0.5; // ضریب شدت افکت (با این عدد بازی کن)
-
-      lastScrollY = currentScrollY;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          targetSpeedRef.current = (currentScrollY - lastScrollY) * 0.15;
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+      }
     };
 
     const animate = () => {
-      // کم کردن سرعت به مرور (Inertia) تا برگرده به صفر
-      speed *= 0.9;
+      // Smooth lerp برای نرم‌تر شدن
+      speedRef.current += (targetSpeedRef.current - speedRef.current) * 0.08;
+      targetSpeedRef.current *= 0.95;
 
-      // اگر سرعت خیلی کم بود، صفرش کن که پرفورمنس هدر نره
-      if (Math.abs(speed) < 0.05) {
-        speed = 0;
-        document.body.style.textShadow = 'none';
-        // برای عکس‌ها (سنگینه، اگر لگ زد خط پایین رو پاک کن)
-        document.body.style.filter = 'none';
+      if (Math.abs(speedRef.current) < 0.01) {
+        speedRef.current = 0;
+        document.documentElement.style.removeProperty('--scroll-speed');
+        document.documentElement.style.removeProperty('--scroll-direction');
       } else {
-        // محدود کردن ماکسیمم جابجایی (مثلا 10 پیکسل)
-        const shift = Math.min(Math.max(speed, -10), 10);
-
-        // اعمال افکت RGB روی متن‌ها
-        // رنگ قرمز میره راست، آبی میره چپ
-        document.body.style.textShadow = `${shift}px 0 0 rgba(255,0,0,0.4), ${-shift}px 0 0 rgba(0,0,255,0.4)`;
-
-        // اعمال افکت روی عکس‌ها و بقیه چیزها (اختیاری - ممکنه سنگین باشه)
-       // document.body.style.filter = `drop-shadow(${shift}px 0 0 rgba(255,0,0,0.2)) drop-shadow(${-shift}px 0 0 rgba(0,0,255,0.2))`;
+        const speed = Math.min(Math.max(speedRef.current, -1), 1);
+        document.documentElement.style.setProperty('--scroll-speed', Math.abs(speed).toString());
+        document.documentElement.style.setProperty('--scroll-direction', speed > 0 ? '1' : '-1');
       }
 
       rafId = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    animate();
+    // Passive listener برای پرفورمنس بهتر
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    rafId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(rafId);
-      document.body.style.textShadow = 'none';
-      document.body.style.filter = 'none';
+      document.documentElement.style.removeProperty('--scroll-speed');
+      document.documentElement.style.removeProperty('--scroll-direction');
     };
   }, []);
 
-  // این کامپوننت چیزی رندر نمیکنه، فقط افکت میده
   return null;
 };
 
-export default ScrollRGB;
+export default ScrollDistortion;

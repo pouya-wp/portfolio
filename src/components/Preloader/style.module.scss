@@ -1,35 +1,55 @@
-.introduction{
+.introduction {
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     position: fixed;
-    z-index: 99;
-    background-color: #141516;
-    svg{
+    z-index: 99999;
+    background-color: #ff6b00;
+
+    svg {
         position: absolute;
         top: 0;
         width: 100%;
         height: calc(100% + 300px);
-        path{
-            fill: #141516;
+
+        path {
+            fill: #ff6b00;
         }
     }
-    p{
+
+    .counter {
         display: flex;
-        color: white;
-        font-size: 42px;
-        align-items: center;
-        position: absolute;
+        align-items: baseline;
+        position: relative;
         z-index: 1;
-        span{
-            display: block;
-            width: 10px;
-            height: 10px;
-            background-color: white;
-            border-radius: 50%;
-            margin-right: 10px;
+
+        .number {
+            font-size: clamp(80px, 20vw, 200px);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
         }
+
+        .percent {
+            font-size: clamp(24px, 5vw, 48px);
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            margin-left: 8px;
+        }
+    }
+
+    .progressBar {
+        position: absolute;
+        bottom: 15%;
+        left: 10%;
+        width: 80%;
+        height: 2px;
+        background: #fff;
+        transform-origin: left;
+        z-index: 1;
     }
 }
