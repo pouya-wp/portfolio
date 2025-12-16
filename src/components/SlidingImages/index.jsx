@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { gsap } from 'gsap'
+import Image from 'next/image'
 
 const projects = [
   {
@@ -78,7 +79,7 @@ const ProjectCard = ({ project, onOpen, index }) => {
             animate={{ opacity: isHovered ? 0 : 1 }}
             transition={{ duration: 0.3 }}
           >
-            <img src={project.thumbnail} alt={project.title} />
+            <Image src={project.thumbnail} alt={project.title} width={480} height={320} />
             <div className="thumbnail-overlay">
               <span>Hover to preview</span>
             </div>

@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { motion } from 'framer-motion';
@@ -18,32 +18,48 @@ export default function Hero() {
   const firstText = useRef(null);
   const secondText = useRef(null);
   const slider = useRef(null);
-  let xPercent = 0;
-  let direction = -1;
+  const xPercent = useRef(0);
+  const directionRef = useRef(-1);
+  const animationRef = useRef(null);
+
+  const animate = useCallback(() => {
+    if (xPercent.current < -100) {
+      xPercent.current = 0;
+    } else if (xPercent.current > 0) {
+      xPercent.current = -100;
+    }
+
+    gsap.set(firstText.current, { xPercent: xPercent.current });
+    gsap.set(secondText.current, { xPercent: xPercent.current });
+    xPercent.current += 0.1 * directionRef.current;
+    animationRef.current = requestAnimationFrame(animate);
+  }, []);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+
     gsap.to(slider.current, {
       scrollTrigger: {
         trigger: document.documentElement,
         scrub: 0.25,
         start: 0,
         end: window.innerHeight,
-        onUpdate: e => direction = e.direction * -1
+        onUpdate: (e) => {
+          directionRef.current = e.direction * -1;
+        }
       },
       x: "-500px",
     });
-    requestAnimationFrame(animate);
-  }, []);
 
-  const animate = () => {
-    if (xPercent < -100) xPercent = 0;
-    else if (xPercent > 0) xPercent = -100;
-    gsap.set(firstText.current, { xPercent });
-    gsap.set(secondText.current, { xPercent });
-    requestAnimationFrame(animate);
-    xPercent += 0.1 * direction;
-  };
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, [animate]);
 
   return (
     <motion.main variants={slideUp} initial="initial" animate="enter" className={styles.hero}>
@@ -82,8 +98,8 @@ export default function Hero() {
 
       <div className={styles.marqueeWrapper}>
         <div ref={slider} className={styles.marquee}>
-          <p ref={firstText}>Design & Development — Creative Solutions — </p>
-          <p ref={secondText}>Design & Development — Creative Solutions — </p>
+          <p ref={firstText}>Design &amp; Development — Creative Solutions — </p>
+          <p ref={secondText}>Design &amp; Development — Creative Solutions — </p>
         </div>
       </div>
     </motion.main>

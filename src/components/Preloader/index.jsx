@@ -10,7 +10,7 @@ export default function Preloader({ finishLoading }) {
 
     useEffect(() => {
         setDimension({ width: window.innerWidth, height: window.innerHeight });
-    }, []);
+    }, [finishLoading]);
 
     useEffect(() => {
         if (progress >= 100) {

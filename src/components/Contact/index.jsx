@@ -94,7 +94,7 @@ export default function Contact() {
                 >
                     {[...Array(4)].map((_, i) => (
                         <span key={i} className="marquee-text">
-                            Let's Create Something Amazing Together
+                            Let&apos;s Create Something Amazing Together
                             <span className="marquee-dot">✦</span>
                         </span>
                     ))}
@@ -146,7 +146,7 @@ export default function Contact() {
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.1 }}
                                 >
-                                    Let's work
+                                    Let&apos;s work
                                 </motion.span>
                                 <motion.span
                                     className="title-line title-outline"
